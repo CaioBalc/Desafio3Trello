@@ -1,28 +1,34 @@
 <?php
-require_once 'Conexao.php'; 
+require_once 'Conexao.php';
 
-class Usuario{
+class Usuario {
     private $conexaoBanco;
+    private $nome;
+    private $email;
 
     public function __construct() {
         $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
     }
 
-    public function criaUsuario($dadosUsuario)
-    {
+    public function criaUsuario($nome, $email) {
         try {
             // Validação básica dos dados do usuário
-            if (empty($dadosUsuario['nome_usuario'])) {
+            if (empty($nome)) {
                 throw new Exception("O nome do usuário é obrigatório.");
             }
-            if (empty($dadosUsuario['email'])) {
+            if (empty($email)) {
                 throw new Exception("O email do usuário é obrigatório.");
             }
-            if (!filter_var($dadosUsuario['email'], FILTER_VALIDATE_EMAIL)) {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 throw new Exception("O email fornecido é inválido.");
             }
 
-            $this->salvaUsuario($dadosUsuario);//--------
+            // Atribui os dados validados aos atributos da classe
+            $this->nome = $nome;
+            $this->email = $email;
+
+            // Salva o usuário no banco de dados
+            $this->salvaUsuario();
 
             echo "Usuário criado com sucesso.";
         } catch (Exception $e) {
@@ -30,25 +36,18 @@ class Usuario{
         }
     }
 
-    private function salvaUsuario($usuarioData) 
-    {
+    private function salvaUsuario() {
         $sql = "INSERT INTO usuarios (nome_usuario, email) VALUES (?, ?)";
-        try 
-        {
+        try {
             $stmt = $this->conexaoBanco->prepare($sql);
             $stmt->execute([
-
-                $usuarioData['nome_usuario'],
-                $usuarioData['email']
-   
+                $this->nome,
+                $this->email
             ]);
-          
-            echo "Usuario salvo com sucesso.\n";
-        } 
-        catch (PDOException $e) 
-        {
-            exit('Erro ao salvar usuario no banco de dados: ' . $e->getMessage());
+
+            echo "Usuário salvo com sucesso.\n";
+        } catch (PDOException $e) {
+            exit('Erro ao salvar usuário no banco de dados: ' . $e->getMessage());
         }
     }
-
 }
