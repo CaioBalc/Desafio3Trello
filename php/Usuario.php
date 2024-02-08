@@ -37,20 +37,25 @@ class Usuario {
         }
     }
 
-    private function salvaUsuario() {
-        $sql = "INSERT INTO usuarios (nome_usuario, email) VALUES (?, ?)";
+    private function salvaUsuario() 
+    {
+        $sql = "INSERT INTO usuarios (nome_usuario, email) VALUES (?, ?) RETURNING id_usuario";
         try {
             $stmt = $this->conexaoBanco->prepare($sql);
             $stmt->execute([
                 $this->nome,
                 $this->email
             ]);
-
-            $this->idUsuario = $stmt->fetch(PDO::FETCH_ASSOC)['id_usuario'];//pega id gerado no tabela 
-
-            echo "Usuário salvo com sucesso.\n";
+    
+            // Captura o ID do usuário recém-criado
+            $this->idUsuario = $stmt->fetch(PDO::FETCH_ASSOC)['id_usuario'];
+    
+            echo "Usuário salvo com sucesso e ID recuperado: " . $this->idUsuario . "\n";
         } catch (PDOException $e) {
             exit('Erro ao salvar usuário no banco de dados: ' . $e->getMessage());
         }
     }
+
+    private function 
+    
 }
