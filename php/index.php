@@ -1,4 +1,7 @@
 <?php
+//sudo chmod -R 755 /home/imply/Área\ de\ Trabalho/desafios/desafios02/desafio2/dados     se por acaso acontecer de novo
+//sudo chown -R imply /home/imply/Área\ de\ Trabalho/desafios/desafios02/desafio2/dados
+//remover dados
 
 require "Atribuicao.php";
 require "Projeto.php";
