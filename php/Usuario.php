@@ -8,10 +8,26 @@ class Usuario{
         $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
     }
 
-    public function criaUsuario()
+    public function criaUsuario($dadosUsuario)
     {
+        try {
+            // Validação básica dos dados do usuário
+            if (empty($dadosUsuario['nome_usuario'])) {
+                throw new Exception("O nome do usuário é obrigatório.");
+            }
+            if (empty($dadosUsuario['email'])) {
+                throw new Exception("O email do usuário é obrigatório.");
+            }
+            if (!filter_var($dadosUsuario['email'], FILTER_VALIDATE_EMAIL)) {
+                throw new Exception("O email fornecido é inválido.");
+            }
 
-        $this->salvaUsuario($dadosUsuario);
+            $this->salvaUsuario($dadosUsuario);//--------
+
+            echo "Usuário criado com sucesso.";
+        } catch (Exception $e) {
+            echo "Erro ao criar usuário: " . $e->getMessage();
+        }
     }
 
     private function salvaUsuario($usuarioData) 
