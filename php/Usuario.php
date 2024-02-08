@@ -22,8 +22,8 @@ class Usuario{
                 throw new Exception("O email fornecido é inválido.");
             }
 
-            // Se os dados são válidos, tenta salvar o usuário no banco de dados
-            $this->salvaUsuario($dadosUsuario);
+            $this->salvaUsuario($dadosUsuario);//--------
+
             echo "Usuário criado com sucesso.";
         } catch (Exception $e) {
             echo "Erro ao criar usuário: " . $e->getMessage();
