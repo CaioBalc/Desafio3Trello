@@ -7,7 +7,7 @@ class Projeto {
     private $descricao_projeto;
     private $data_inicio;
     private $data_fim;
-    private $idProjeto;
+    private $id_projeto;
 
     public function __construct() {
         $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
@@ -48,9 +48,9 @@ class Projeto {
             ]);
     
             // Captura o ID do projeto recém-criado
-            $this->idProjeto = $stmt->fetch(PDO::FETCH_ASSOC)['id_projeto'];
+            $this->id_projeto = $stmt->fetch(PDO::FETCH_ASSOC)['id_projeto'];
     
-            echo "Projeto salvo com sucesso e ID recuperado: " . $this->idProjeto . "\n";
+            echo "Projeto salvo com sucesso e ID recuperado: " . $this->id_projeto . "\n";
         } catch (PDOException $e) {
             exit('Erro ao salvar projeto no banco de dados: ' . $e->getMessage());
         }
