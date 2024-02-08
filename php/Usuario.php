@@ -27,7 +27,7 @@ class Usuario{
         } 
         catch (PDOException $e) 
         {
-            exit('Erro ao salvar pergunta no banco de dados: ' . $e->getMessage());
+            exit('Erro ao salvar usuario no banco de dados: ' . $e->getMessage());
         }
     }
 
