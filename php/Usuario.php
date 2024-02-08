@@ -7,11 +7,13 @@ class Usuario {
     private $email;
     private $idUsuario;
 
-    public function __construct() {
+    public function __construct() 
+    {
         $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
     }
 
-    public function criaUsuario($nome, $email) {
+    public function criaUsuario($nome, $email)
+    {
         try {
             // Validação básica dos dados do usuário
             if (empty($nome)) {
@@ -56,6 +58,7 @@ class Usuario {
         }
     }
 
-    private function 
-    
+    //funç~ao abaixo pega usuario do banco pelo id e salva nos atributos do objeto
+    private function pegaUsuarioDoBanco() {}
+          
 }
