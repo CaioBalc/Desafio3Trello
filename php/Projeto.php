@@ -55,4 +55,9 @@ class Projeto {
             exit('Erro ao salvar projeto no banco de dados: ' . $e->getMessage());
         }
     }
+
+    public function getIdProjeto() {
+        return $this->id_projeto;
+    }
+    
 }
