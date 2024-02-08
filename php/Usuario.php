@@ -5,6 +5,7 @@ class Usuario {
     private $conexaoBanco;
     private $nome;
     private $email;
+    private $idUsuario;
 
     public function __construct() {
         $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
@@ -44,6 +45,8 @@ class Usuario {
                 $this->nome,
                 $this->email
             ]);
+
+            $this->idUsuario = $stmt->fetch(PDO::FETCH_ASSOC)['id_usuario'];//pega id gerado no tabela 
 
             echo "Usuário salvo com sucesso.\n";
         } catch (PDOException $e) {
