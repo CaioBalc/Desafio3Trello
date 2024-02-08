@@ -1,34 +1,57 @@
 <?php
+require_once 'Conexao.php';
 
-class Projeto{
+class Projeto {
     private $conexaoBanco;
+    private $nome_projeto;
+    private $descricao_projeto;
+    private $data_inicio;
+    private $data_fim;
+    private $idProjeto;
 
     public function __construct() {
         $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
     }
 
-    public function criaProjeto($dadosProjeto)
-    {
-        $this->salvaProjeto($dadosProjeto);
+    public function criaProjeto($nome_projeto, $descricao_projeto, $data_inicio, $data_fim) {
+        try {
+            // Validação básica dos dados do projeto
+            if (empty($nome_projeto)) {
+                throw new Exception("O nome do projeto é obrigatório.");
+            }
+
+            // Atribui os dados validados aos atributos da classe
+            $this->nome_projeto = $nome_projeto;
+            $this->descricao_projeto = $descricao_projeto;
+            $this->data_inicio = $data_inicio;
+            $this->data_fim = $data_fim;
+
+            // Salva o projeto no banco de dados
+            $this->salvaProjeto();
+
+            echo "Projeto criado com sucesso.";
+        } catch (Exception $e) {
+            echo "Erro ao criar projeto: " . $e->getMessage();
+        }
     }
-    private function salvaProjeto($projetoData) {//função usada dentro da de cima para pegar os dados do json e salvar no formato certo na tabela
-        $sql = "INSERT INTO projetos (nome_projeto, descricao_projeto, data_inicio, data_fim) VALUES (?, ?, ?, ?)";
-        try 
-        {
+
+    private function salvaProjeto() 
+    {
+        $sql = "INSERT INTO projetos (nome_projeto, descricao_projeto, data_inicio, data_fim) VALUES (?, ?, ?, ?) RETURNING id_projeto";
+        try {
             $stmt = $this->conexaoBanco->prepare($sql);
             $stmt->execute([
-
-                $projetoData['nome_projeto'],
-                $projetoData['descricao_projeto'],
-                $projetoData['data_inicio'],
-                $projetoData['data_fim']
-   
+                $this->nome_projeto,
+                $this->descricao_projeto,
+                $this->data_inicio,
+                $this->data_fim
             ]);
-          
-            echo "Projeto salvo com sucesso.\n";
-        } 
-        catch (PDOException $e) 
-        {
+    
+            // Captura o ID do projeto recém-criado
+            $this->idProjeto = $stmt->fetch(PDO::FETCH_ASSOC)['id_projeto'];
+    
+            echo "Projeto salvo com sucesso e ID recuperado: " . $this->idProjeto . "\n";
+        } catch (PDOException $e) {
             exit('Erro ao salvar projeto no banco de dados: ' . $e->getMessage());
         }
     }
