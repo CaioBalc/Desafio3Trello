@@ -4,15 +4,18 @@ require_once 'Conexao.php';
 class Usuario{
     private $conexaoBanco;
 
-    public function __construct($sessionToken) {
+    public function __construct() {
         $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
     }
 
-    private function criaUsuario()
+    public function criaUsuario()
     {
-        
+
+        $this->salvaUsuario($dadosUsuario);
     }
-    private function salvaUsuario($usuarioData) {//função usada dentro da de cima para pegar os dados do json e salvar no formato certo na tabela
+
+    private function salvaUsuario($usuarioData) 
+    {
         $sql = "INSERT INTO usuarios (nome_usuario, email) VALUES (?, ?)";
         try 
         {
@@ -20,7 +23,7 @@ class Usuario{
             $stmt->execute([
 
                 $usuarioData['nome_usuario'],
-                $usuarioData['email'],
+                $usuarioData['email']
    
             ]);
           
