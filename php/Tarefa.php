@@ -37,7 +37,7 @@ class Tarefa {
 
     private function salvaTarefa() 
     {
-        $sql = "INSERT INTO tarefas (descricao_tarefa, id_projeto, data_inicio, data_fim) VALUES (?, ?, ?, ?) RETURNING id_tarefa";
+        $sql = "INSERT INTO tarefas (descricao_tarefa, data_inicio, data_fim, id_projeto) VALUES (?, ?, ?, ?) RETURNING id_tarefa";
         try {
             $stmt = $this->conexaoBanco->prepare($sql);
             $stmt->execute([
