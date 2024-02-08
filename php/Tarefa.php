@@ -13,22 +13,23 @@ class Tarefa {
         $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
     }
 
-    public function criaTarefa($descricao_tarefa, $data_inicio, $data_fim) {
+    public function criaTarefa($tarefaData) {
         try {
-            // Validação básica dos dados do tarefa
-            if (empty($nome_tarefa)) {
-                throw new Exception("O nome da tarefa é obrigatório.");
+            // Validação básica dos dados da tarefa
+            if (empty($tarefaData->descricao_tarefa)) {
+                throw new Exception("A descrição da tarefa é obrigatória.");
             }
 
             // Atribui os dados validados aos atributos da classe
-            $this->descricao_tarefa = $descricao_tarefa;
-            $this->data_inicio = $data_inicio;
-            $this->data_fim = $data_fim;
+            $this->descricao_tarefa = $tarefaData->descricao_tarefa;
+            $this->data_inicio = $tarefaData->data_inicio;
+            $this->data_fim = $tarefaData->data_fim;
+            $this->id_projeto = $tarefaData->id_projeto;
 
             // Salva a tarefa no banco de dados
             $this->salvaTarefa();
 
-            echo "Tarefa criado com sucesso.";
+            echo "Tarefa criada com sucesso.";
         } catch (Exception $e) {
             echo "Erro ao criar tarefa: " . $e->getMessage();
         }
@@ -36,19 +37,20 @@ class Tarefa {
 
     private function salvaTarefa() 
     {
-        $sql = "INSERT INTO tarefas (descricao_tarefa, data_inicio, data_fim) VALUES (?, ?, ?) RETURNING id_tarefa";
+        $sql = "INSERT INTO tarefas (descricao_tarefa, id_projeto, data_inicio, data_fim) VALUES (?, ?, ?, ?) RETURNING id_tarefa";
         try {
             $stmt = $this->conexaoBanco->prepare($sql);
             $stmt->execute([
                 $this->descricao_tarefa,
+                $this->id_projeto,
                 $this->data_inicio,
                 $this->data_fim
             ]);
     
-            // Captura o ID do tarefa recém-criado
+            // Captura o ID da tarefa recém-criada
             $this->id_tarefa = $stmt->fetch(PDO::FETCH_ASSOC)['id_tarefa'];
     
-            echo "Tarefa salvo com sucesso e ID recuperado: " . $this->id_tarefa . "\n";
+            echo "Tarefa salva com sucesso e ID recuperado: " . $this->id_tarefa . "\n";
         } catch (PDOException $e) {
             exit('Erro ao salvar tarefa no banco de dados: ' . $e->getMessage());
         }
