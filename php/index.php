@@ -10,5 +10,5 @@ $usuario1 = new Usuario();
 $usuario1->criaUsuario('Nome Usuario','email@teste.com');
 
 $projeto = new Projeto();
-$projeto->criaProjeto('Nome projeto', 'Descrição projeto', '01/01/0001', '12/12/0012');
+$projeto->criaProjeto('Nome projeto', 'Descrição projeto', '2024-02-05', '2024-02-09');
 ?>
