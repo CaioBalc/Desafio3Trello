@@ -9,7 +9,7 @@ class Usuario{
     }
 
     private function salvaUsuario($questionData) {//função usada dentro da de cima para pegar os dados do json e salvar no formato certo na tabela
-        $sql = "INSERT INTO perguntas (tipo, categoria, dificuldade, pergunta, respostaCorreta, respostasIncorretas) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO usuarios (nome, email) VALUES (?, ?)";
         try 
         {
             $stmt = $this->conexaoBanco->prepare($sql);
