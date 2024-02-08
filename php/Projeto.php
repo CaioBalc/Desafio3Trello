@@ -7,9 +7,9 @@ class Projeto{
         $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
     }
 
-    private function criaProjeto()
+    public function criaProjeto($dadosProjeto)
     {
-        
+        $this->salvaProjeto($dadosProjeto);
     }
     private function salvaProjeto($projetoData) {//função usada dentro da de cima para pegar os dados do json e salvar no formato certo na tabela
         $sql = "INSERT INTO projetos (nome_projeto, descricao_projeto, data_inicio, data_fim) VALUES (?, ?, ?, ?)";
