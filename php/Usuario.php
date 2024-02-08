@@ -13,7 +13,9 @@ class Usuario{
 
         $this->salvaUsuario($dadosUsuario);
     }
-    private function salvaUsuario($usuarioData) {//função usada dentro da de cima para pegar os dados do json e salvar no formato certo na tabela
+
+    private function salvaUsuario($usuarioData) 
+    {
         $sql = "INSERT INTO usuarios (nome_usuario, email) VALUES (?, ?)";
         try 
         {
@@ -21,7 +23,7 @@ class Usuario{
             $stmt->execute([
 
                 $usuarioData['nome_usuario'],
-                $usuarioData['email'],
+                $usuarioData['email']
    
             ]);
           
