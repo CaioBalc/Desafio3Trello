@@ -14,7 +14,6 @@ $projeto = new Projeto();
 $projeto->criaProjeto('Nome projeto', 'Descrição projeto', '2024-02-05', '2024-02-09');
 
 $tarefa = new Tarefa();
-$id_projeto = $projeto->getIdProjeto(); // Recupera o id_projeto do projeto criado
-$tarefa->criaTarefa('Descrição tarefa', '2024-02-05', '2024-02-09', $id_projeto); // Passa o id_projeto para a função criaTarefa
+$tarefa->criaTarefa('Descrição tarefa', '2024-02-05', '2024-02-09', $projeto->getIdProjeto()); // Passa o id_projeto para a função criaTarefa
 
 ?>
