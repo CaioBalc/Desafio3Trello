@@ -1,13 +1,6 @@
 <?php
 
- class TabelaUsuario{
-
-}
-
- class TabelaTarefa{
-
-}
-
- class TabelaAtribuicao{
-    
-}
+require "Atribuicao.php";
+require "Projeto.php";
+require "Tarefa.php";
+require "Usuario.php";

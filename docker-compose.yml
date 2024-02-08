@@ -11,7 +11,7 @@ services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_DB: dadosjogos
+      POSTGRES_DB: dadostarefas
       POSTGRES_USER: usuario
       POSTGRES_PASSWORD: senha
     ports:
