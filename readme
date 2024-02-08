@@ -1,0 +1,13 @@
+//sudo chmod -R 755 /home/imply/Área\ de\ Trabalho/desafios/desafios02/desafio2/dados     se por acaso acontecer de novo
+//sudo chown -R imply /home/imply/Área\ de\ Trabalho/desafios/desafios02/desafio2/dados
+//remover dados
+
+//cd C:\Users\Master\Desktop\imply\desafios\desafios03\desafio1\Desafio3Trelo-main
+//cd /home/imply/Área\ de\ Trabalho/desafios/desafios03/desafio1/Desafio3Trivia-main
+//docker-compose up -d
+//docker context use default
+
+# Caio #
+cd /home/imply/Documentos/GitHub/Desafio3Trelo
+docker-compose
+docker-compose up -d

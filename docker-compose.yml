@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  php:
+    build: ./php
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    volumes:
+      - ./php:/var/www/html
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: dadosjogos
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: senha
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./dados:/var/lib/postgresql/data
+      - ./postgresql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+    
+#docker compose up -d  docker compose stop e docker compose down
