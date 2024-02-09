@@ -12,7 +12,7 @@ class Usuario {
         $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
     }
 
-    public function criaUsuario($nome, $email)
+    public function criaUsuario(string $nome, string $email)
     {
         try {
             // Validação básica dos dados do usuário
@@ -140,5 +140,17 @@ class Usuario {
         } catch (Exception $e) {
             exit($e->getMessage());
         }
+    }
+
+    public function getIdUsuario(): ?int {
+        return $this->idUsuario;
+    }
+
+    public function getNome(): string {
+        return $this->nome;
+    }
+
+    public function getEmail(): string {
+        return $this->email;
     }
 }

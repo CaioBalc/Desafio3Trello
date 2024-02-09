@@ -13,32 +13,45 @@ class Tarefa {
         $this->conexaoBanco = Conexao::conectar();
     }
 
-    public function criaTarefa($descricao_tarefa, $data_inicio, $data_fim, Projeto $projeto) {
+    public function criaTarefa(string $descricao_tarefa, string $data_inicio, string $data_fim, Projeto $projeto) {
         try {
             // Validação básica dos dados da tarefa
             if (empty($descricao_tarefa)) {
                 throw new Exception("A descrição da tarefa é obrigatória.");
             }
-
+    
+            // Tenta converter as strings de data para objetos DateTime
+            $inicio = DateTime::createFromFormat('Y-m-d', $data_inicio);
+            $fim = DateTime::createFromFormat('Y-m-d', $data_fim);
+    
+            // Verifica se as datas são válidas
+            if (!$inicio || $inicio->format('Y-m-d') !== $data_inicio || !$fim || $fim->format('Y-m-d') !== $data_fim) {
+                throw new Exception("Formato de data inválido. Use o formato yyyy-mm-dd.");
+            }
+    
             // Validação das datas da tarefa em relação ao projeto
-            if ($data_inicio < $projeto->getDataInicio() || $data_fim > $projeto->getDataFim()) {
+            $projetoInicio = new DateTime($projeto->getDataInicio());
+            $projetoFim = new DateTime($projeto->getDataFim());
+            if ($inicio < $projetoInicio || $fim > $projetoFim) {
                 throw new Exception("As datas da tarefa devem estar dentro do intervalo do projeto.");
             }
-
+    
             // Atribui os dados validados aos atributos da classe
             $this->descricao_tarefa = $descricao_tarefa;
             $this->data_inicio = $data_inicio;
             $this->data_fim = $data_fim;
-            $this->projeto = $projeto; // Armazena o objeto Projeto
-
+            $this->projeto = $projeto;
+    
             // Salva a tarefa no banco de dados
-            $this->salvaTarefa();
-
             echo "Tarefa criada com sucesso.";
+
+            $this->salvaTarefa();
+    
         } catch (Exception $e) {
             echo "Erro ao criar tarefa: " . $e->getMessage();
         }
     }
+    
 
     private function salvaTarefa() {
         $sql = "INSERT INTO tarefas (descricao_tarefa, data_inicio, data_fim, id_projeto) VALUES (?, ?, ?, ?) RETURNING id_tarefa";
