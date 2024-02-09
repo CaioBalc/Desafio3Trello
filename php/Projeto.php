@@ -49,7 +49,7 @@ class Projeto {
             $this->data_inicio = $data_inicio;
             $this->data_fim = $data_fim;
 
-            echo "Projeto criado com sucesso.";
+            echo "Projeto criado com sucesso.\n";
 
             $this->salvaProjeto();
     

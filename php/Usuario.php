@@ -33,7 +33,7 @@ class Usuario {
             // Salva o usuário no banco de dados
             $this->salvaUsuario();
 
-            echo "Usuário criado com sucesso.";
+            echo "Usuário criado com sucesso.\n";
         } catch (Exception $e) {
             echo "Erro ao criar usuário: " . $e->getMessage();
         }

@@ -22,8 +22,8 @@ class Tarefa {
             }
     
             // Tenta converter as strings de data para objetos DateTime
-            $inicio = DateTime::createFromFormat('Y-m-d', $data_inicio);
-            $fim = DateTime::createFromFormat('Y-m-d', $data_fim);
+            $inicio = DateTime::createFromFormat('Y-m-d', $data_inicio)->setTime(0, 0, 0);
+            $fim = DateTime::createFromFormat('Y-m-d', $data_fim)->setTime(0, 0, 0);
     
             // Verifica se as datas são válidas
             if (!$inicio || $inicio->format('Y-m-d') !== $data_inicio || !$fim || $fim->format('Y-m-d') !== $data_fim) {
@@ -33,6 +33,12 @@ class Tarefa {
             // Validação das datas da tarefa em relação ao projeto
             $projetoInicio = new DateTime($projeto->getDataInicio());
             $projetoFim = new DateTime($projeto->getDataFim());
+
+            //echo "\n\nprojeto inicio: ";var_dump($projetoInicio);
+            //echo "\nprojeto fim: ";var_dump($projetoFim);
+            //echo "\ninicio: "; var_dump($inicio);
+            //echo "\ninicio: ";var_dump($fim);
+
             if ($inicio < $projetoInicio || $fim > $projetoFim) {
                 throw new Exception("As datas da tarefa devem estar dentro do intervalo do projeto.");
             }
@@ -83,8 +89,8 @@ class Tarefa {
             }
     
             // Converte e valida as datas
-            $inicio = DateTime::createFromFormat('Y-m-d', $data_inicio);
-            $fim = DateTime::createFromFormat('Y-m-d', $data_fim);
+            $inicio = DateTime::createFromFormat('Y-m-d', $data_inicio)->setTime(0, 0, 0);
+            $fim = DateTime::createFromFormat('Y-m-d', $data_fim)->setTime(0, 0, 0);
             if (!$inicio || $inicio->format('Y-m-d') !== $data_inicio || !$fim || $fim->format('Y-m-d') !== $data_fim) {
                 throw new Exception("Formato de data inválido. Use o formato yyyy-mm-dd.");
             }
