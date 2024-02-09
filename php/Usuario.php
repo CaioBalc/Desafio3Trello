@@ -9,13 +9,13 @@ class Usuario {
 
     public function __construct() 
     {
-        $this->conexaoBanco = Conexao::conectar(); // Utiliza a conexão única fornecida pela classe Conexao
+        $this->conexaoBanco = Conexao::conectar(); 
     }
 
     public function criaUsuario(string $nome, string $email)
     {
         try {
-            // Validação básica dos dados do usuário
+           
             if (empty($nome)) {
                 throw new Exception("O nome do usuário é obrigatório.");
             }
@@ -26,11 +26,11 @@ class Usuario {
                 throw new Exception("O email fornecido é inválido.");
             }
 
-            // Atribui os dados validados aos atributos da classe
+            
             $this->nome = $nome;
             $this->email = $email;
 
-            // Salva o usuário no banco de dados
+            
             $this->salvaUsuario();
 
             echo "Usuário criado com sucesso.\n";
@@ -49,7 +49,7 @@ class Usuario {
                 $this->email
             ]);
     
-            // Captura o ID do usuário recém-criado
+            
             $this->idUsuario = $stmt->fetch(PDO::FETCH_ASSOC)['id_usuario'];
     
             echo "Usuário salvo com sucesso e ID recuperado: " . $this->idUsuario . "\n";
@@ -58,7 +58,7 @@ class Usuario {
         }
     }
 
-    //funç~ao abaixo pega usuario do banco pelo id e salva nos atributos do objeto
+    
     public function pegaUsuarioDoBanco($id) {
         try {
             $sql = "SELECT id_usuario, nome_usuario, email FROM usuarios WHERE id_usuario = ?";
@@ -81,16 +81,16 @@ class Usuario {
             exit($e->getMessage());
         }
     }
-    //a função abaixo deve editar o usuario no banco de dados usando o idUsuario para achar e trocar o nome e email
+    
     public function editaUsuario($nome, $email) {
         try {
-            // Verifica se o ID do usuário foi definido
+           
             if (empty($this->idUsuario)) {
                 throw new Exception('Sem ID de referência. Adicione um buscando um do banco de dados
                  com esseusuario->pegaUsuarioDoBanco($id) ou criando um novo com esseusuario->criaUsuario($nome, $email)');
             }
     
-            // Validação básica dos dados do usuário
+           
             if (empty($nome)) {
                 throw new Exception("O nome do usuário é obrigatório.");
             }
@@ -110,7 +110,7 @@ class Usuario {
                 $this->email = $email;
                 echo "Usuário editado com sucesso.";
             } else {
-                // Esta mensagem é apresentada se não houver alterações ou o ID não existir
+              
                 throw new Exception("Nenhuma alteração realizada. Verifique se o ID do usuário está correto.");
             }
         } catch (PDOException $e) {
