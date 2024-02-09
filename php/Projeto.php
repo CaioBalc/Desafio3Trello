@@ -14,10 +14,10 @@ class Projeto {
         $this->conexaoBanco = Conexao::conectar();
     }
 
-    public function criaProjeto($nome_projeto, $descricao_projeto, $data_inicio, $data_fim)
+    public function criaProjeto(string $nome_projeto, string $descricao_projeto, string $data_inicio, string $data_fim) 
     {
         try {
-            // Verifica se os campos estão vazios e lança uma exceção se estiverem
+            // Verifica se os campos estão vazios
             if (empty($nome_projeto)) {
                 throw new Exception("O nome do projeto é obrigatório.");
             }
@@ -31,23 +31,34 @@ class Projeto {
                 throw new Exception("A data de fim do projeto é obrigatória.");
             }
     
-            // Verifica se a data de início é anterior à data de fim
-            if (new DateTime($data_inicio) > new DateTime($data_fim)) {
-                throw new Exception("A data de início deve ser anterior à data de fim.");
+            // Valida o formato das datas
+            $inicio = DateTime::createFromFormat('Y-m-d', $data_inicio);
+            $fim = DateTime::createFromFormat('Y-m-d', $data_fim);
+    
+            if (!$inicio || !$fim) {
+                throw new Exception("As datas devem estar no formato AAAA-MM-DD.");
+            }
+    
+            // Verifica se a data de início é antes da data de fim
+            if ($inicio > $fim) {
+                throw new Exception("A data de início deve ser antes da data de fim.");
             }
     
             $this->nome_projeto = $nome_projeto;
             $this->descricao_projeto = $descricao_projeto;
             $this->data_inicio = $data_inicio;
             $this->data_fim = $data_fim;
-    
+
+            echo "Projeto criado com sucesso.";
+
             $this->salvaProjeto();
     
-            echo "Projeto criado com sucesso.";
+            
         } catch (Exception $e) {
             echo "Erro ao criar projeto: " . $e->getMessage();
         }
     }
+    
 
     private function salvaProjeto() {
         $sql = "INSERT INTO projetos (nome_projeto, descricao_projeto, data_inicio, data_fim) VALUES (?, ?, ?, ?) RETURNING id_projeto";
@@ -68,18 +79,23 @@ class Projeto {
         }
     }
 
-    // Método para retornar o ID do projeto
     public function getIdProjeto() {
         return $this->id_projeto;
     }
 
-    // Método para retornar a data de início do projeto
     public function getDataInicio() {
         return $this->data_inicio;
     }
 
-    // Método para retornar a data de fim do projeto
     public function getDataFim() {
         return $this->data_fim;
+    }
+
+    public function getNomeProjeto() {
+        return $this->nome_projeto;
+    }
+
+    public function getDescricaoProjeto() {
+        return $this->descricao_projeto;
     }
 }
