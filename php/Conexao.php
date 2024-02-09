@@ -1,5 +1,5 @@
 <?php 
-//padrão Singleton só da pra modificar aqui e impede gerar objetos
+
 
 class Conexao {
     private static $conexao = null;
@@ -12,9 +12,9 @@ class Conexao {
     }
 
     public static function conectar() {
-        if (self::$conexao === null) {//::metodo de acessar funcoes ou etc(estáticas) de uma clase sem referenciar um objeto, já que não tem
+        if (self::$conexao === null) {
             try {
-                $host = "db"; // Nome do container, deve achar já q estou usando docker-compose
+                $host = "db"; 
                 $dbname = "dadostarefas";
                 $user = "usuario";
                 $password = "senha";
@@ -25,7 +25,7 @@ class Conexao {
                     $password
                 );
 
-                // Configura o modo de erro do PDO para exceção
+                
                 self::$conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             } catch (PDOException $e) {

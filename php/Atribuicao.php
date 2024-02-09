@@ -2,19 +2,19 @@
 
 class Atribuicao {
    private $conexaoBanco;
-   private $idAtribuicao; // Novo atributo para armazenar o ID da atribuição
+   private $idAtribuicao; 
 
    public function __construct() {
        $this->conexaoBanco = Conexao::conectar();
    }
 
    public function atribuirTarefaAUsuario($id_usuario, $id_tarefa) {
-       $sql = "INSERT INTO atribuicoes (id_usuario, id_tarefa) VALUES (?, ?) RETURNING id_atribuicao"; // Modificado para PostgreSQL
+       $sql = "INSERT INTO atribuicoes (id_usuario, id_tarefa) VALUES (?, ?) RETURNING id_atribuicao"; 
        try {
            $stmt = $this->conexaoBanco->prepare($sql);
            $stmt->execute([$id_usuario, $id_tarefa]);
            if ($stmt->rowCount() > 0) {
-               $this->idAtribuicao = $stmt->fetch(PDO::FETCH_COLUMN); // Atualiza o atributo com o ID da atribuição
+               $this->idAtribuicao = $stmt->fetch(PDO::FETCH_COLUMN); 
                echo "Tarefa atribuída com sucesso. ID da atribuição: {$this->idAtribuicao}\n";
            }
        } catch (PDOException $e) {

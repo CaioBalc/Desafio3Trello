@@ -17,7 +17,7 @@ class Projeto {
     public function criaProjeto(string $nome_projeto, string $descricao_projeto, string $data_inicio, string $data_fim) 
     {
         try {
-            // Verifica se os campos estão vazios
+            
             if (empty($nome_projeto)) {
                 throw new Exception("O nome do projeto é obrigatório.");
             }
@@ -31,7 +31,7 @@ class Projeto {
                 throw new Exception("A data de fim do projeto é obrigatória.");
             }
     
-            // Valida o formato das datas
+           
             $inicio = DateTime::createFromFormat('Y-m-d', $data_inicio);
             $fim = DateTime::createFromFormat('Y-m-d', $data_fim);
     
@@ -39,7 +39,7 @@ class Projeto {
                 throw new Exception("As datas devem estar no formato AAAA-MM-DD.");
             }
     
-            // Verifica se a data de início é antes da data de fim
+            
             if ($inicio > $fim) {
                 throw new Exception("A data de início deve ser antes da data de fim.");
             }
